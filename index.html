@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width" initial-scale="1.0" />
+	<meta property="og:image" content="" />
+	
+	<link rel="stylesheet" href="fontello/fontello.css" title="" type="text/css" />
+	<style type="text/css" media="all">
+	  * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    body {
+    	background-color:  #77d8f0;
+    }
+	  .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 30px;
+      }
+    .grocery-item-title h2{
+        font-size: 23px;
+        font-weight: bold;
+        text-transform: capitalize;
+        text-align: center;
+    }
+    .grocery-items {
+        display: flex;
+        margin: 20px 0;
+    }
+    .grocery-items input{
+        outline: none;
+        background-color: #fff;
+        color: #808080;
+        padding: 10px;
+        font-size: 17px;
+    }
+    .add-button{
+        background-color: #000;
+        color: #fff;
+        padding: 5px;
+        font-size: 10px;
+    }
+    .add-button:hover{
+      outline: 1px solid #fff;
+    }
+    .list-items{
+      list-style: none;
+    }
+    .list-items li{
+        font-size: 20px;
+        width:280px;
+        font-weight: bold;
+        color: #767272;
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .icon-cancel{
+       color: red;
+    }
+    .icon-cancel:hover{
+      opacity: .3;
+    }
+    .icon-edit{
+        color: #093cbd;
+        margin-left: auto;
+       margin-right: 6px;
+    }
+    .icon-cancel:hover{
+      opacity: .3;
+    }
+	</style>
+</head>
+
+<body>
+	<div class="container">
+	    <div class="grocery-item-title">
+	        <h2>Grocery Items</h2>
+	    </div>
+	    <div  class="grocery-items">
+	        <input 
+	        type="text"
+	        placeholder="Enter your item"
+	        id="input"
+	        />
+	        <button id="add-button" class="add-button">Add Items</button>
+	    </div>
+	    <ul id="list" class="list-items">
+	    </ul>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+	  let GroceryItemsInput = document.getElementById("input");
+    let addItems = document.getElementById("add-button");
+    let listItem = document.getElementById("list");
+    // add items into kitechen items
+    function additems(){
+       // create DOM element
+       let inputData = GroceryItemsInput.value;
+       let li = document.createElement("li");
+       let small = document.createElement("small");
+       
+       li.appendChild(small)
+       small.innerText = inputData;
+       if(inputData!=''){
+       listItem.appendChild(li);
+       GroceryItemsInput.value = '';
+       GroceryItemsInput.focus();
+       }else{
+         alert("PLEASE ADD YOUR ITEMS")
+       }
+       
+       // for edit icon
+       let edit = document.createElement("i");
+       edit.classList.add("icon-edit");
+       li.appendChild(edit);
+       
+       //for cancel icon
+       let i = document.createElement("i");
+       i.classList.add("icon-cancel");
+       li.appendChild(i);
+       
+       
+    }
+    //delete items in list
+    function deleteItems(event){
+        let i = event.target.classList[0];
+        if(i === "icon-cancel"){
+            let removeItem = event.target.parentElement;
+            removeItem.remove()
+        }
+    }
+    
+    function editItems(event){
+        if(event.target.classList[0] === "icon-edit"){
+          let  editValue = prompt("please renter your item ")
+          let editedValue = event.target.parentElement;
+          
+          if(editValue != ''){
+            let small = editedValue.querySelector('small');
+            small.innerText = editValue;
+          }else{
+            alert("Not change item")
+          }
+          
+        }
+    }
+    
+    addItems.addEventListener("click",additems)
+    listItem.addEventListener("click",deleteItems)
+    listItem.addEventListener("click",editItems)
+	</script>
+</body>
+</html>
